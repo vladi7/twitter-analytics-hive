@@ -1,0 +1,29 @@
+Query:
+
+DROP TABLE IF EXISTS TweetsAlpha;
+CREATE TABLE TweetsAlpha(
+    id BIGINT,
+    created_at STRING,
+    created_at_date STRING,
+    created_at_year STRING,
+    created_at_month STRING,
+    created_at_day STRING,
+    created_at_time STRING,
+    in_reply_to_user_id_str STRING,
+    text STRING) STORED AS ORC;
+	
+	
+17/03/02 03:34:24 WARN conf.HiveConf: HiveConf of name hive.metastore.heapsize does not exist
+17/03/02 03:34:24 WARN conf.HiveConf: HiveConf of name hive.log.dir does not exist
+17/03/02 03:34:24 WARN conf.HiveConf: HiveConf of name hive.heapsize does not exist
+
+Logging initialized using configuration in jar:file:/c:/apps/temp/hdfs/nm-local-dir/usercache/admin/appcache/application_1488419189255_0014/container_1488419189255_0014_01_000002/hive-common-1.2.1.2.3.3.1-25.jar!/hive-log4j.properties
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/C:/apps/dist/hadoop-2.7.1.2.3.3.1-25/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/C:/apps/dist/hbase-1.1.2.2.3.3.1-25/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+OK
+Time taken: 17.021 seconds
+OK
+Time taken: 0.732 seconds

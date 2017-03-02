@@ -1,0 +1,7 @@
+XLODBC
+1
+DSN=myHDICluster.azurehdinsight.net;AllowSelfSignedServerCert=;ApplySSPWithQueries=;AsyncExecPollInterval=;AuthMech=6;BinaryColumnLength=32767;CAIssuedCertNamesMismatch=;DecimalColumnScale=10;DefaultStringColumnLength=65536;DelegationUID=;DESCRIPTION=myHDICluster.azurehdinsight.net;Driver=Microsoft Hive ODBC Driver;DriverConfigTakePrecedence=;EnableAsyncExec=;FastSQLPrepare=0;FixUnquotedDefaultSchemaNameInQuery=1;GetTablesWithQuery=0;HiveServerType=2;Host=finallyhello.azurehdinsight.net;HTTPPath=;InvalidSessionAutoRecover=1;LCaseSspKeyName=;Port=443;RowsFetchedPerBlock=10000;Schema=default;ServiceDiscoveryMode=0;ShowSystemTable=0;SocketTimeout=;SSL=1;ThriftTransport=2;TrustedCerts=;TwoWaySSL=;UID=admin;UseNativeQuery=0;UseOnlySSPI=;UseUnicodeSqlCharacterTypes=0;
+SELECT tweets.created_at_month, tweets.tweetdate, tweets.candidate, tweets.sentiment  FROM HIVE.default.tweets tweets  WHERE (tweets.sentiment=1) AND (tweets.candidate=1) OR (tweets.sentiment=0) AND (tweets.candidate=1) OR (tweets.sentiment=1) AND (tweets.candidate=2) OR (tweets.sentiment=0) AND (tweets.candidate=2) OR (tweets.sentiment=-1) AND (tweets.candidate=1) OR (tweets.sentiment=-1) AND (tweets.candidate=2)  ORDER BY tweets.tweetdate, tweets.created_at_month
+
+
+created_at_month	tweetdate	candidate	sentiment

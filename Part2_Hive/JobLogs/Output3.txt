@@ -1,0 +1,24 @@
+Query: 
+drop table IF EXISTS dictionary;
+create table dictionary(word string,rating int) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+LOAD DATA INPATH 'wasb://finallyhello@projectksustorage.blob.core.windows.net/HdiSamples/TwitterProject/Dictionary' into TABLE dictionary;
+
+
+17/03/02 02:52:24 WARN conf.HiveConf: HiveConf of name hive.metastore.heapsize does not exist
+17/03/02 02:52:24 WARN conf.HiveConf: HiveConf of name hive.log.dir does not exist
+17/03/02 02:52:24 WARN conf.HiveConf: HiveConf of name hive.heapsize does not exist
+
+Logging initialized using configuration in jar:file:/c:/apps/temp/hdfs/nm-local-dir/usercache/admin/appcache/application_1488419189255_0006/container_1488419189255_0006_01_000002/hive-common-1.2.1.2.3.3.1-25.jar!/hive-log4j.properties
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/C:/apps/dist/hadoop-2.7.1.2.3.3.1-25/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/C:/apps/dist/hbase-1.1.2.2.3.3.1-25/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+OK
+Time taken: 2.078 seconds
+Loading data to table default.dictionary
+Table default.dictionary stats: [numFiles=2, totalSize=40161]
+OK
+Time taken: 1.5 seconds
+OK
+Time taken: 0.562 seconds, Fetched: 3478 row(s)

@@ -1,0 +1,340 @@
+Query: 
+analyze table TweetsAlpha compute statistics for columns id, created_at, created_at_month, text;
+analyze table tweets_sentiment compute statistics for columns id, sentiment;
+drop table tweets;
+CREATE TABLE IF NOT EXISTS tweets
+STORED AS ORC
+AS SELECT
+  t.id,
+  created_at,
+  t.created_at_month,
+  SUBSTR(t.created_at,4, 8) as tweetdate, --Mon Mar 30 18:56:55 +0000 2009
+  case 
+    when t.text like '%Obama%' AND t.text not like '%Romney%' then 1
+    when t.text like '%Romney%' AND t.text not like '%Obama%' then 2
+  end as candidate  
+  ,
+  case s.sentiment
+    when 'positive' then 1
+    when 'neutral' then 0
+    when 'negative' then -1
+  end as sentiment  
+FROM TweetsAlpha t LEFT OUTER JOIN tweets_sentiment s on t.id = s.id
+and t.created_at is not null and s.sentiment is not null;
+
+
+
+17/03/02 03:20:44 WARN conf.HiveConf: HiveConf of name hive.metastore.heapsize does not exist
+17/03/02 03:20:44 WARN conf.HiveConf: HiveConf of name hive.log.dir does not exist
+17/03/02 03:20:44 WARN conf.HiveConf: HiveConf of name hive.heapsize does not exist
+
+Logging initialized using configuration in jar:file:/c:/apps/temp/hdfs/nm-local-dir/usercache/admin/appcache/application_1488419189255_0011/container_1488419189255_0011_01_000002/hive-common-1.2.1.2.3.3.1-25.jar!/hive-log4j.properties
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/C:/apps/dist/hadoop-2.7.1.2.3.3.1-25/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/C:/apps/dist/hbase-1.1.2.2.3.3.1-25/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+Query ID = hdp_20170302032046_0ca024cc-23d5-4c70-99d8-927b478e0e74
+Total jobs = 1
+Launching Job 1 out of 1
+
+
+Status: Running (Executing on YARN cluster with App id application_1488419189255_0012)
+
+Map 1: -/-	Reducer 2: 0/1	
+Map 1: -/-	Reducer 2: 0/1	
+Map 1: 0/83	Reducer 2: 0/1	
+Map 1: 0/83	Reducer 2: 0/1	
+Map 1: 0(+1)/83	Reducer 2: 0/1	
+Map 1: 0(+4)/83	Reducer 2: 0/1	
+Map 1: 0(+6)/83	Reducer 2: 0/1	
+Map 1: 0(+9)/83	Reducer 2: 0/1	
+Map 1: 0(+11)/83	Reducer 2: 0/1	
+Map 1: 0(+14)/83	Reducer 2: 0/1	
+Map 1: 0(+14)/83	Reducer 2: 0/1	
+Map 1: 0(+15)/83	Reducer 2: 0/1	
+Map 1: 0(+19)/83	Reducer 2: 0/1	
+Map 1: 0(+21)/83	Reducer 2: 0/1	
+Map 1: 1(+26)/83	Reducer 2: 0/1	
+Map 1: 1(+25)/83	Reducer 2: 0/1	
+Map 1: 12(+21)/83	Reducer 2: 0/1	
+Map 1: 18(+17)/83	Reducer 2: 0/1	
+Map 1: 18(+24)/83	Reducer 2: 0/1	
+Map 1: 19(+26)/83	Reducer 2: 0/1	
+Map 1: 19(+27)/83	Reducer 2: 0/1	
+Map 1: 19(+30)/83	Reducer 2: 0/1	
+Map 1: 19(+35)/83	Reducer 2: 0/1	
+Map 1: 19(+36)/83	Reducer 2: 0/1	
+Map 1: 19(+37)/83	Reducer 2: 0/1	
+Map 1: 19(+39)/83	Reducer 2: 0/1	
+Map 1: 19(+41)/83	Reducer 2: 0/1	
+Map 1: 19(+42)/83	Reducer 2: 0/1	
+Map 1: 19(+43)/83	Reducer 2: 0/1	
+Map 1: 19(+46)/83	Reducer 2: 0/1	
+Map 1: 19(+47)/83	Reducer 2: 0/1	
+Map 1: 20(+47)/83	Reducer 2: 0/1	
+Map 1: 20(+48)/83	Reducer 2: 0/1	
+Map 1: 20(+50)/83	Reducer 2: 0/1	
+Map 1: 20(+52)/83	Reducer 2: 0/1	
+Map 1: 21(+54)/83	Reducer 2: 0/1	
+Map 1: 30(+48)/83	Reducer 2: 0/1	
+Map 1: 32(+47)/83	Reducer 2: 0/1	
+Map 1: 36(+45)/83	Reducer 2: 0(+1)/1	
+Map 1: 38(+43)/83	Reducer 2: 0(+1)/1	
+Map 1: 40(+41)/83	Reducer 2: 0(+1)/1	
+Map 1: 40(+42)/83	Reducer 2: 0(+1)/1	
+Map 1: 40(+43)/83	Reducer 2: 0(+1)/1	
+Map 1: 42(+41)/83	Reducer 2: 0(+1)/1	
+Map 1: 44(+39)/83	Reducer 2: 0(+1)/1	
+Map 1: 46(+37)/83	Reducer 2: 0(+1)/1	
+Map 1: 48(+35)/83	Reducer 2: 0(+1)/1	
+Map 1: 49(+34)/83	Reducer 2: 0(+1)/1	
+Map 1: 51(+32)/83	Reducer 2: 0(+1)/1	
+Map 1: 52(+31)/83	Reducer 2: 0(+1)/1	
+Map 1: 53(+30)/83	Reducer 2: 0(+1)/1	
+Map 1: 54(+29)/83	Reducer 2: 0(+1)/1	
+Map 1: 57(+26)/83	Reducer 2: 0(+1)/1	
+Map 1: 58(+25)/83	Reducer 2: 0(+1)/1	
+Map 1: 63(+20)/83	Reducer 2: 0(+1)/1	
+Map 1: 66(+17)/83	Reducer 2: 0(+1)/1	
+Map 1: 70(+13)/83	Reducer 2: 0(+1)/1	
+Map 1: 72(+11)/83	Reducer 2: 0(+1)/1	
+Map 1: 75(+8)/83	Reducer 2: 0(+1)/1	
+Map 1: 76(+7)/83	Reducer 2: 0(+1)/1	
+Map 1: 77(+6)/83	Reducer 2: 0(+1)/1	
+Map 1: 78(+5)/83	Reducer 2: 0(+1)/1	
+Map 1: 79(+4)/83	Reducer 2: 0(+1)/1	
+Map 1: 80(+3)/83	Reducer 2: 0(+1)/1	
+Map 1: 81(+2)/83	Reducer 2: 0(+1)/1	
+Map 1: 83/83	Reducer 2: 0(+1)/1	
+Map 1: 83/83	Reducer 2: 1/1	
+Status: DAG finished successfully in 39.54 seconds
+
+
+METHOD                         DURATION(ms) 
+parse                                  641
+semanticAnalyze                      2,421
+TezBuildDag                            281
+TezSubmitToRunningDag                  188
+TotalPrepTime                        9,220
+
+VERTICES         TOTAL_TASKS  FAILED_ATTEMPTS KILLED_TASKS DURATION_SECONDS    CPU_TIME_MILLIS     GC_TIME_MILLIS  INPUT_RECORDS   OUTPUT_RECORDS 
+Map 1                     83                0            0            27.44            446,985            116,583     31,863,145               83
+Reducer 2                  1                0            0             8.62              1,891                255             83                0
+OK
+Time taken: 49.428 seconds
+Query ID = hdp_20170302032135_d7c78645-2f28-4586-a482-640a9a075d90
+Total jobs = 1
+Launching Job 1 out of 1
+
+
+Status: Running (Executing on YARN cluster with App id application_1488419189255_0012)
+
+Map 1: -/-	Reducer 2: 0/1	
+Map 1: 0/10	Reducer 2: 0/1	
+Map 1: 0(+5)/10	Reducer 2: 0/1	
+Map 1: 0(+10)/10	Reducer 2: 0/1	
+Map 1: 0(+10)/10	Reducer 2: 0/1	
+Map 1: 1(+9)/10	Reducer 2: 0/1	
+Map 1: 2(+8)/10	Reducer 2: 0/1	
+Map 1: 6(+4)/10	Reducer 2: 0(+1)/1	
+Map 1: 9(+1)/10	Reducer 2: 0(+1)/1	
+Map 1: 10/10	Reducer 2: 0(+1)/1	
+Map 1: 10/10	Reducer 2: 1/1	
+Status: DAG finished successfully in 8.49 seconds
+
+
+METHOD                         DURATION(ms) 
+parse                                    0
+semanticAnalyze                        266
+TezBuildDag                             31
+TezSubmitToRunningDag                    0
+TotalPrepTime                          563
+
+VERTICES         TOTAL_TASKS  FAILED_ATTEMPTS KILLED_TASKS DURATION_SECONDS    CPU_TIME_MILLIS     GC_TIME_MILLIS  INPUT_RECORDS   OUTPUT_RECORDS 
+Map 1                     10                0            0             6.86             49,782             18,925     31,252,430               10
+Reducer 2                  1                0            0             1.22              1,594                 17             10                0
+OK
+Time taken: 9.271 seconds
+OK
+Time taken: 0.093 seconds
+Query ID = hdp_20170302032145_000a4f38-2cb7-4c00-864d-3f5ab56ff2a3
+Total jobs = 1
+Launching Job 1 out of 1
+
+
+Status: Running (Executing on YARN cluster with App id application_1488419189255_0012)
+
+Map 1: -/-	Map 3: -/-	Reducer 2: 0/830	
+Map 1: -/-	Map 3: 0/10	Reducer 2: 0/830	
+Map 1: -/-	Map 3: 0(+1)/10	Reducer 2: 0/830	
+Map 1: -/-	Map 3: 0(+10)/10	Reducer 2: 0/830	
+Map 1: -/-	Map 3: 0(+10)/10	Reducer 2: 0/830	
+Map 1: 0/83	Map 3: 0(+10)/10	Reducer 2: 0/830	
+Map 1: 0/83	Map 3: 0(+10)/10	Reducer 2: 0/830	
+Map 1: 0/83	Map 3: 0(+10)/10	Reducer 2: 0/830	
+Map 1: 0/83	Map 3: 1(+9)/10	Reducer 2: 0/830	
+Map 1: 0/83	Map 3: 2(+8)/10	Reducer 2: 0/830	
+Map 1: 0/83	Map 3: 4(+6)/10	Reducer 2: 0/830	
+Map 1: 0(+1)/83	Map 3: 5(+5)/10	Reducer 2: 0/830	
+Map 1: 0(+2)/83	Map 3: 5(+5)/10	Reducer 2: 0/830	
+Map 1: 0(+5)/83	Map 3: 6(+4)/10	Reducer 2: 0/830	
+Map 1: 0(+6)/83	Map 3: 6(+4)/10	Reducer 2: 0/830	
+Map 1: 0(+8)/83	Map 3: 9(+1)/10	Reducer 2: 0/830	
+Map 1: 0(+8)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+10)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+12)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+14)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+17)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+18)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+19)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+21)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+22)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+23)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+25)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+26)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+27)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+28)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+29)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+30)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+33)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 0(+34)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 3(+33)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 7(+32)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 9(+30)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 10(+29)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 13(+29)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 13(+31)/83	Map 3: 10/10	Reducer 2: 0/830	
+Map 1: 17(+29)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 18(+30)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 19(+32)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 19(+35)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 21(+36)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 22(+36)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 22(+40)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 22(+41)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 22(+42)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 22(+43)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 22(+44)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 23(+46)/83	Map 3: 10/10	Reducer 2: 0/104	
+Map 1: 24(+46)/83	Map 3: 10/10	Reducer 2: 0(+1)/104	
+Map 1: 26(+44)/83	Map 3: 10/10	Reducer 2: 0(+2)/104	
+Map 1: 26(+45)/83	Map 3: 10/10	Reducer 2: 0(+3)/104	
+Map 1: 26(+46)/83	Map 3: 10/10	Reducer 2: 0(+4)/104	
+Map 1: 27(+46)/83	Map 3: 10/10	Reducer 2: 0(+4)/104	
+Map 1: 27(+47)/83	Map 3: 10/10	Reducer 2: 0(+5)/104	
+Map 1: 27(+48)/83	Map 3: 10/10	Reducer 2: 0(+5)/104	
+Map 1: 27(+49)/83	Map 3: 10/10	Reducer 2: 0(+5)/104	
+Map 1: 28(+50)/83	Map 3: 10/10	Reducer 2: 0(+5)/104	
+Map 1: 30(+48)/83	Map 3: 10/10	Reducer 2: 0(+7)/104	
+Map 1: 32(+48)/83	Map 3: 10/10	Reducer 2: 0(+10)/104	
+Map 1: 33(+48)/83	Map 3: 10/10	Reducer 2: 0(+11)/104	
+Map 1: 34(+48)/83	Map 3: 10/10	Reducer 2: 0(+13)/104	
+Map 1: 35(+47)/83	Map 3: 10/10	Reducer 2: 0(+14)/104	
+Map 1: 37(+45)/83	Map 3: 10/10	Reducer 2: 0(+18)/104	
+Map 1: 39(+44)/83	Map 3: 10/10	Reducer 2: 0(+21)/104	
+Map 1: 39(+44)/83	Map 3: 10/10	Reducer 2: 0(+23)/104	
+Map 1: 44(+39)/83	Map 3: 10/10	Reducer 2: 0(+23)/104	
+Map 1: 44(+39)/83	Map 3: 10/10	Reducer 2: 0(+26)/104	
+Map 1: 44(+39)/83	Map 3: 10/10	Reducer 2: 0(+27)/104	
+Map 1: 45(+38)/83	Map 3: 10/10	Reducer 2: 0(+30)/104	
+Map 1: 46(+37)/83	Map 3: 10/10	Reducer 2: 0(+31)/104	
+Map 1: 47(+36)/83	Map 3: 10/10	Reducer 2: 0(+33)/104	
+Map 1: 47(+36)/83	Map 3: 10/10	Reducer 2: 0(+36)/104	
+Map 1: 48(+35)/83	Map 3: 10/10	Reducer 2: 0(+36)/104	
+Map 1: 48(+35)/83	Map 3: 10/10	Reducer 2: 0(+39)/104	
+Map 1: 49(+34)/83	Map 3: 10/10	Reducer 2: 0(+41)/104	
+Map 1: 51(+32)/83	Map 3: 10/10	Reducer 2: 0(+42)/104	
+Map 1: 51(+32)/83	Map 3: 10/10	Reducer 2: 0(+43)/104	
+Map 1: 52(+31)/83	Map 3: 10/10	Reducer 2: 0(+46)/104	
+Map 1: 55(+28)/83	Map 3: 10/10	Reducer 2: 0(+48)/104	
+Map 1: 55(+28)/83	Map 3: 10/10	Reducer 2: 0(+49)/104	
+Map 1: 57(+26)/83	Map 3: 10/10	Reducer 2: 0(+49)/104	
+Map 1: 57(+26)/83	Map 3: 10/10	Reducer 2: 0(+51)/104	
+Map 1: 58(+25)/83	Map 3: 10/10	Reducer 2: 0(+51)/104	
+Map 1: 59(+24)/83	Map 3: 10/10	Reducer 2: 0(+52)/104	
+Map 1: 59(+24)/83	Map 3: 10/10	Reducer 2: 0(+53)/104	
+Map 1: 60(+23)/83	Map 3: 10/10	Reducer 2: 0(+54)/104	
+Map 1: 62(+21)/83	Map 3: 10/10	Reducer 2: 0(+54)/104	
+Map 1: 63(+20)/83	Map 3: 10/10	Reducer 2: 0(+55)/104	
+Map 1: 64(+19)/83	Map 3: 10/10	Reducer 2: 0(+58)/104	
+Map 1: 65(+18)/83	Map 3: 10/10	Reducer 2: 0(+59)/104	
+Map 1: 66(+17)/83	Map 3: 10/10	Reducer 2: 0(+60)/104	
+Map 1: 68(+15)/83	Map 3: 10/10	Reducer 2: 0(+61)/104	
+Map 1: 69(+14)/83	Map 3: 10/10	Reducer 2: 0(+62)/104	
+Map 1: 70(+13)/83	Map 3: 10/10	Reducer 2: 0(+64)/104	
+Map 1: 71(+12)/83	Map 3: 10/10	Reducer 2: 0(+64)/104	
+Map 1: 72(+11)/83	Map 3: 10/10	Reducer 2: 0(+66)/104	
+Map 1: 74(+9)/83	Map 3: 10/10	Reducer 2: 0(+66)/104	
+Map 1: 74(+9)/83	Map 3: 10/10	Reducer 2: 0(+68)/104	
+Map 1: 76(+7)/83	Map 3: 10/10	Reducer 2: 0(+68)/104	
+Map 1: 76(+7)/83	Map 3: 10/10	Reducer 2: 0(+70)/104	
+Map 1: 77(+6)/83	Map 3: 10/10	Reducer 2: 0(+70)/104	
+Map 1: 79(+4)/83	Map 3: 10/10	Reducer 2: 0(+71)/104	
+Map 1: 79(+4)/83	Map 3: 10/10	Reducer 2: 0(+73)/104	
+Map 1: 80(+3)/83	Map 3: 10/10	Reducer 2: 0(+73)/104	
+Map 1: 80(+3)/83	Map 3: 10/10	Reducer 2: 0(+74)/104	
+Map 1: 81(+2)/83	Map 3: 10/10	Reducer 2: 0(+74)/104	
+Map 1: 82(+1)/83	Map 3: 10/10	Reducer 2: 0(+75)/104	
+Map 1: 82(+1)/83	Map 3: 10/10	Reducer 2: 0(+76)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 0(+76)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 0(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 0(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 0(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 0(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 0(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 1(+76)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 1(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 2(+76)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 2(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 4(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 7(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 9(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 11(+76)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 15(+75)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 18(+76)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 18(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 23(+77)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 26(+75)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 33(+71)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 37(+67)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 42(+62)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 49(+55)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 52(+52)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 60(+44)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 63(+41)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 71(+33)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 73(+31)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 74(+30)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 76(+28)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 77(+27)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 78(+26)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 83(+21)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 91(+13)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 93(+11)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 94(+10)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 96(+8)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 97(+7)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 99(+5)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 101(+3)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 102(+2)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 103(+1)/104	
+Map 1: 83/83	Map 3: 10/10	Reducer 2: 104/104	
+Status: DAG finished successfully in 81.49 seconds
+
+
+METHOD                         DURATION(ms) 
+parse                                   16
+semanticAnalyze                        906
+TezBuildDag                            172
+TezSubmitToRunningDag                    0
+TotalPrepTime                        1,375
+
+VERTICES         TOTAL_TASKS  FAILED_ATTEMPTS KILLED_TASKS DURATION_SECONDS    CPU_TIME_MILLIS     GC_TIME_MILLIS  INPUT_RECORDS   OUTPUT_RECORDS 
+Map 1                     83                0            0            33.06            575,957            148,221     31,863,145       31,863,145
+Map 3                     10                0            0            16.59            115,687             31,140     31,252,430       31,252,430
+Reducer 2                104                0            0            51.29          1,095,113            691,033     63,115,575                0
+Moving data to: wasb://finallyhello@projectksustorage.blob.core.windows.net/hive/warehouse/tweets
+Table default.tweets stats: [numFiles=104, numRows=31863145, totalSize=246960184, rawDataSize=9790675284]
+OK
+Time taken: 90.761 seconds
