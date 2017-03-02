@@ -65,7 +65,7 @@ SELECT
     SUBSTR (get_json_object(json_response, '$.created_at'),12,8),
     get_json_object(json_response, '$.in_reply_to_user_id_str'),
     get_json_object(json_response, '$.text')
-WHERE (LENGTH(json_response) > 500 AND (json_response like '%Obama%' or json_response like '%Romney%'));
+WHERE (LENGTH(json_response) > 500 AND (json_response like '%Abortion%' or json_response like '%Parenthood%'));
 analyze table TweetsAlpha compute statistics for columns id;
 SELECT count(id) as cnt FROM TweetsAlpha;
 
@@ -97,33 +97,20 @@ create table IF NOT EXISTS tweets_sentiment stored as orc as select
     else 'neutral' end as sentiment
 from l3 group by id;
 
-analyze table tweets_sentiment compute statistics for columns id, sentiment;
-Drop table tweetsbi;
-CREATE TABLE IF NOT EXISTS tweetsbi
-STORED AS ORC
-AS SELECT
-  SUBSTR(t.created_at,4, 8) as datetime1, --Mon Mar 30 18:56:55 +0000 2009
-  case s.sentiment
-    when 'positive' then 1
-    when 'neutral' then 0
-    when 'negative' then -1
-  end as sentiment  
-FROM TweetsAlpha t LEFT OUTER JOIN tweets_sentiment s on t.id = s.id and t.created_at is not null;
 
-analyze table TweetsAlpha compute statistics for columns id, created_at, created_at_month, text;
+analyze table TweetsAlpha compute statistics for columns id, created_at, created_at_day, created_at_month, text;
 analyze table tweets_sentiment compute statistics for columns id, sentiment;
 drop table tweets;
 CREATE TABLE IF NOT EXISTS tweets
 STORED AS ORC
 AS SELECT
   t.id,
-  created_at,
+  t.created_at_day,
   t.created_at_month,
-  SUBSTR(t.created_at,4, 8) as tweetdate, --Mon Mar 30 18:56:55 +0000 2009
   case 
-    when t.text like '%Obama%' AND t.text not like '%Romney%' then 1
-    when t.text like '%Romney%' AND t.text not like '%Obama%' then 2
-  end as candidate  
+    when t.text like '%Abortion%' AND t.text not like '%Parenthood%' then 1
+    when t.text like '%Parenthood%' AND t.text not like '%Abortion%' then 2
+  end as rights  
   ,
   case s.sentiment
     when 'positive' then 1
@@ -134,6 +121,6 @@ FROM TweetsAlpha t LEFT OUTER JOIN tweets_sentiment s on t.id = s.id
 and t.created_at is not null and s.sentiment is not null;
 
 
-analyze table tweets compute statistics for columns id, sentiment, tweetdate, candidate,created_at, created_at_month, coordinates;
-select count(id) from tweets where candidate is not null;
+analyze table tweets compute statistics for columns id, sentiment, rights, created_at_month, created_at_day;
+select count(id) from tweets where rights is not null;
 
